@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Varadanam — Temple Management, Simplified</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #100b04;
+      color: #faf6ef;
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection { background: #FF6906; color: #fff; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="components.jsx"></script>
+  <script type="text/babel" src="features.jsx"></script>
+  <script type="text/babel" src="preview.jsx"></script>
+  <script type="text/babel" src="testimonials.jsx"></script>
+  <script type="text/babel" src="footer.jsx"></script>
+  <script type="text/babel" src="demo-modal.jsx"></script>
+  <script type="text/babel">
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "accentColor": "#f96404",
+      "goldColor": "#FFB31D",
+      "ctaLabel": "Request a Demo"
+    }/*EDITMODE-END*/;
+
+    function App() {
+      const [scrolled, setScrolled] = React.useState(false);
+      const [demoOpen, setDemoOpen] = React.useState(false);
+      const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      React.useEffect(() => {
+        const fn = () => setScrolled(window.scrollY > 40);
+        window.addEventListener('scroll', fn);
+        return () => window.removeEventListener('scroll', fn);
+      }, []);
+
+      return (
+        <>
+          <Navbar scrolled={scrolled} onDemo={() => setDemoOpen(true)} />
+          <Hero onDemo={() => setDemoOpen(true)} />
+          <FeaturesSection />
+          <PreviewSection />
+          <TestimonialsSection onDemo={() => setDemoOpen(true)} />
+          <Footer />
+          <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
+          <TweaksPanel>
+            <TweakSection title="Brand">
+              <TweakColor id="accentColor" label="Accent (orange)" value={tweaks.accentColor} onChange={v => setTweak('accentColor', v)} />
+              <TweakColor id="goldColor" label="Gold" value={tweaks.goldColor} onChange={v => setTweak('goldColor', v)} />
+            </TweakSection>
+            <TweakSection title="Hero">
+              <TweakText id="ctaLabel" label="CTA Button" value={tweaks.ctaLabel} onChange={v => setTweak('ctaLabel', v)} />
+            </TweakSection>
+          </TweaksPanel>
+        </>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

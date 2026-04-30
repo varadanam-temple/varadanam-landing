@@ -1,0 +1,14 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: Kingthings_Petrock
+font link: http://www.kingthingsfonts.co.uk/fonts/fonts.htm
+font author: Kingthings
+font author site: http://www.kingthingsfonts.co.uk/
+Slogan Font: OFLGoudyStMTT.ttf
+
+icon designer: undefined
+icon designer link: undefined
+        
+{"bg-gradient-0":"#F05000","bg-gradient-1":"#F7AA00","icon":"#ffffff","font":"#ffffff","slogan":"#ffffff"}
+      
