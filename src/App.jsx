@@ -148,7 +148,7 @@ function Hero({ onDemo }) {
           maxWidth: 600,
           margin: '0 auto 48px',
         }}>
-          A complete platform for Hindu temples — online seva booking, counter billing, devotee management, and a branded temple website.
+          India's complete temple management software — online seva &amp; pooja booking, counter billing, devotee management, donation tracking, and a branded temple website.
         </p>
 
         {/* CTAs */}
@@ -293,7 +293,7 @@ function FeaturesSection() {
             <span style={{ color: '#f96404' }}>in one place.</span>
           </h2>
           <p style={{ fontFamily: 'Lora, serif', fontStyle: 'italic', fontSize: 17, lineHeight: 1.7, color: '#7a6a54', maxWidth: 520 }}>
-            From the first devotee booking to end-of-day collection reports — Varadanam handles it all, so your priests can focus on the divine.
+            From the first online seva booking to end-of-day donation reports — our temple management software handles it all, so your priests can focus on the divine.
           </p>
         </div>
 
@@ -560,7 +560,7 @@ function HowItWorksSection() {
             Up and running in<br /><span style={{ color: '#FF6906' }}>less than a day.</span>
           </h2>
           <p style={{ fontFamily: 'Lora, serif', fontStyle: 'italic', fontSize: 17, color: 'rgba(250,246,239,0.55)', maxWidth: 480, margin: '0 auto', lineHeight: 1.65 }}>
-            No lengthy setup, no IT team required. If your temple has a WhatsApp group, you're already halfway there.
+            No lengthy setup, no IT team required. Get your temple management system live in hours — if your temple has a WhatsApp group, you're already halfway there.
           </p>
         </div>
 
@@ -769,7 +769,7 @@ function TestimonialsSection({ onDemo }) {
               Ready to modernise your temple?
             </h3>
             <p style={{ fontFamily: 'Lora, serif', fontStyle: 'italic', fontSize: 16, color: 'rgba(250,246,239,0.55)', maxWidth: 420 }}>
-              Join 200+ temples already using Varadanam. Setup takes less than a day.
+              Join 200+ Hindu temples across India already using Varadanam's temple management software. Setup takes less than a day.
             </p>
           </div>
           <div style={{ display: 'flex', gap: 14, flexShrink: 0, position: 'relative' }}>
@@ -807,7 +807,7 @@ function Footer() {
           <div>
             <img src="/default-monochrome.svg" alt="Varadanam" style={{ height: 36, width: 'auto', marginBottom: 20 }} />
             <p style={{ fontSize: 14, lineHeight: 1.7, color: 'rgba(250,246,239,0.45)', fontFamily: 'Lora, serif', fontStyle: 'italic', maxWidth: 280, marginBottom: 28 }}>
-              A complete digital platform built for Hindu temples — bringing devotees and divinity closer through technology.
+              India's complete temple management software — online seva booking, pooja management, devotee database, and donation tracking for Hindu temples.
             </p>
             <div style={{ display: 'flex', gap: 12 }}>
               {[
