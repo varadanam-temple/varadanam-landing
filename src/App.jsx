@@ -3,6 +3,8 @@ import { Routes, Route, Link } from 'react-router-dom';
 import OurStory from './OurStory.jsx';
 import Blog from './Blog.jsx';
 import BlogPost from './BlogPost.jsx';
+import TempleHistory from './TempleHistory.jsx';
+import TempleHistoryPost from './TempleHistoryPost.jsx';
 import { posts } from './blogPosts.js';
 import './index.css';
 
@@ -56,6 +58,10 @@ function Navbar({ scrolled, onDemo }) {
           onMouseEnter={e => e.target.style.color = '#fff'}
           onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.7)'}
         >Blog</Link>
+        <Link to="/temple-history" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5, letterSpacing: '0.02em', transition: 'color 0.2s' }}
+          onMouseEnter={e => e.target.style.color = '#FFB31D'}
+          onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.7)'}
+        >Temple History</Link>
         <a href="#demo" onClick={e => { e.preventDefault(); onDemo && onDemo(); }} style={{
           background: '#FF6906', color: '#fff', textDecoration: 'none',
           fontSize: 14, fontWeight: 500, padding: '10px 22px', borderRadius: 8,
@@ -1174,6 +1180,8 @@ export default function App() {
       <Route path="/our-story" element={<OurStory />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
+      <Route path="/temple-history" element={<TempleHistory />} />
+      <Route path="/temple-history/:slug" element={<TempleHistoryPost />} />
     </Routes>
   );
 }
