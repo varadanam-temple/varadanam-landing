@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { getTemple, temples } from './templeHistories.js';
+import { useIsMobile } from './useIsMobile.js';
 
 function renderBody(text) {
   const lines = text.split('\n');
@@ -47,6 +48,7 @@ function renderBody(text) {
 export default function TempleHistoryPost() {
   const { slug } = useParams();
   const temple = getTemple(slug);
+  const isMobile = useIsMobile();
 
   if (!temple) {
     return (
@@ -66,21 +68,21 @@ export default function TempleHistoryPost() {
       {/* Navbar */}
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        padding: '0 48px', height: 72,
+        padding: isMobile ? '0 20px' : '0 48px', height: 72,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         background: 'rgba(16,11,4,0.93)', backdropFilter: 'blur(16px)',
         borderBottom: '1px solid rgba(255,179,29,0.12)',
       }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-          <img src="/default-monochrome.svg" alt="Varadanam" style={{ height: 40, width: 'auto' }} />
+          <img src="/default-monochrome.svg" alt="Varadanam" style={{ height: 36, width: 'auto' }} />
         </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
-          <Link to="/#features" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5 }}>Features</Link>
-          <Link to="/blog" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5 }}>Blog</Link>
-          <Link to="/temple-history" style={{ color: '#FFB31D', textDecoration: 'none', fontSize: 14.5 }}>Temple History</Link>
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 16 : 36 }}>
+          {!isMobile && <Link to="/#features" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5 }}>Features</Link>}
+          {!isMobile && <Link to="/blog" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5 }}>Blog</Link>}
+          {!isMobile && <Link to="/temple-history" style={{ color: '#FFB31D', textDecoration: 'none', fontSize: 14.5 }}>Temple History</Link>}
           <Link to="/" style={{
             background: '#FF6906', color: '#fff', textDecoration: 'none',
-            fontSize: 14, fontWeight: 500, padding: '10px 22px', borderRadius: 8,
+            fontSize: 14, fontWeight: 500, padding: '9px 18px', borderRadius: 8,
           }}>Request a Demo</Link>
         </div>
       </nav>
@@ -90,7 +92,7 @@ export default function TempleHistoryPost() {
         <div style={{
           background: 'linear-gradient(180deg, rgba(255,179,29,0.06) 0%, transparent 100%)',
           borderBottom: '1px solid rgba(255,179,29,0.1)',
-          padding: '72px 32px 56px',
+          padding: isMobile ? '48px 20px 40px' : '72px 32px 56px',
         }}>
           <div style={{ maxWidth: 860, margin: '0 auto' }}>
             <Link to="/temple-history" style={{
@@ -142,9 +144,34 @@ export default function TempleHistoryPost() {
           </div>
         </div>
 
+        {/* Hero image */}
+        {temple.heroImage && (
+          <div style={{ maxWidth: 860, margin: '0 auto', padding: isMobile ? '24px 20px 0' : '40px 32px 0' }}>
+            <figure style={{ margin: 0 }}>
+              <img
+                src={temple.heroImage.src}
+                alt={temple.heroImage.alt}
+                style={{
+                  width: '100%', borderRadius: 12,
+                  display: 'block',
+                  border: '1px solid rgba(255,179,29,0.15)',
+                  objectFit: 'cover', maxHeight: 480,
+                }}
+              />
+              <figcaption style={{
+                fontFamily: 'DM Sans, sans-serif', fontSize: 12.5,
+                color: 'rgba(250,246,239,0.3)', marginTop: 10,
+                fontStyle: 'italic', textAlign: 'center', lineHeight: 1.5,
+              }}>
+                {temple.heroImage.caption}
+              </figcaption>
+            </figure>
+          </div>
+        )}
+
         {/* Quick facts bar */}
         <div style={{ borderBottom: '1px solid rgba(255,179,29,0.1)', background: 'rgba(255,179,29,0.03)' }}>
-          <div style={{ maxWidth: 860, margin: '0 auto', padding: '24px 32px', display: 'flex', flexWrap: 'wrap', gap: 32 }}>
+          <div style={{ maxWidth: 860, margin: '0 auto', padding: isMobile ? '20px' : '24px 32px', display: 'flex', flexWrap: 'wrap', gap: isMobile ? 16 : 32 }}>
             {temple.quickFacts.map(f => (
               <div key={f.label}>
                 <div style={{ fontSize: 10.5, fontWeight: 600, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(250,246,239,0.3)', fontFamily: 'DM Sans, sans-serif', marginBottom: 4 }}>
@@ -159,7 +186,7 @@ export default function TempleHistoryPost() {
         </div>
 
         {/* Table of contents */}
-        <div style={{ maxWidth: 860, margin: '0 auto', padding: '48px 32px 0' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto', padding: isMobile ? '32px 20px 0' : '48px 32px 0' }}>
           <div style={{
             background: 'rgba(255,179,29,0.04)', border: '1px solid rgba(255,179,29,0.12)',
             borderRadius: 12, padding: '28px 32px',
@@ -185,7 +212,7 @@ export default function TempleHistoryPost() {
         </div>
 
         {/* Article body */}
-        <div style={{ maxWidth: 860, margin: '0 auto', padding: '56px 32px 80px' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto', padding: isMobile ? '40px 20px 60px' : '56px 32px 80px' }}>
           {temple.sections.map((section, i) => (
             <div key={i} id={`section-${i}`} style={{ marginBottom: 72 }}>
               {/* Section number + heading */}
@@ -211,6 +238,29 @@ export default function TempleHistoryPost() {
               {/* Divider */}
               <div style={{ height: 1, background: 'linear-gradient(90deg, rgba(255,179,29,0.25), transparent)', marginBottom: 32 }} />
 
+              {/* Section image */}
+              {section.image && (
+                <figure style={{ margin: '0 0 32px' }}>
+                  <img
+                    src={section.image.src}
+                    alt={section.image.alt}
+                    style={{
+                      width: '100%', borderRadius: 10,
+                      display: 'block',
+                      border: '1px solid rgba(255,179,29,0.12)',
+                      objectFit: 'cover', maxHeight: 420,
+                    }}
+                  />
+                  <figcaption style={{
+                    fontFamily: 'DM Sans, sans-serif', fontSize: 12,
+                    color: 'rgba(250,246,239,0.28)', marginTop: 8,
+                    fontStyle: 'italic', textAlign: 'center', lineHeight: 1.5,
+                  }}>
+                    {section.image.caption}
+                  </figcaption>
+                </figure>
+              )}
+
               {/* Body */}
               <div style={{ paddingLeft: 0 }}>
                 {renderBody(section.body)}
@@ -220,10 +270,10 @@ export default function TempleHistoryPost() {
         </div>
 
         {/* CTA */}
-        <div style={{ maxWidth: 860, margin: '0 auto 80px', padding: '0 32px' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto 60px', padding: isMobile ? '0 20px' : '0 32px' }}>
           <div style={{
             background: 'linear-gradient(135deg, #1a1108 0%, #2a1a08 100%)',
-            borderRadius: 14, padding: '40px 48px',
+            borderRadius: 14, padding: isMobile ? '32px 24px' : '40px 48px',
             border: '1px solid rgba(255,179,29,0.15)',
           }}>
             <h3 style={{ fontFamily: 'Playfair Display, serif', fontSize: 24, color: '#faf6ef', marginBottom: 12, fontWeight: 400 }}>
@@ -242,7 +292,7 @@ export default function TempleHistoryPost() {
 
         {/* Other temples */}
         {others.length > 0 && (
-          <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 32px 80px' }}>
+          <div style={{ maxWidth: 860, margin: '0 auto', padding: isMobile ? '0 20px 60px' : '0 32px 80px' }}>
             <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#FFB31D', fontFamily: 'DM Sans, sans-serif', marginBottom: 24 }}>
               More Temples
             </div>
@@ -267,7 +317,7 @@ export default function TempleHistoryPost() {
         )}
 
         {/* Footer */}
-        <div style={{ borderTop: '1px solid rgba(255,179,29,0.1)', padding: '32px 48px', textAlign: 'center' }}>
+        <div style={{ borderTop: '1px solid rgba(255,179,29,0.1)', padding: '32px 20px', textAlign: 'center' }}>
           <span style={{ fontSize: 13, color: 'rgba(250,246,239,0.3)', fontFamily: 'Lora, serif', fontStyle: 'italic' }}>
             © 2026 Varadanam. Made with devotion in India.
           </span>

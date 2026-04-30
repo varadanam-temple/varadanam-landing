@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+import { useIsMobile } from './useIsMobile.js';
 import OurStory from './OurStory.jsx';
 import Blog from './Blog.jsx';
 import BlogPost from './BlogPost.jsx';
@@ -34,49 +35,104 @@ function MandalaBg({ opacity = 0.05 }) {
 
 /* ── Navbar ── */
 function Navbar({ scrolled, onDemo }) {
+  const isMobile = useIsMobile();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const solid = scrolled || menuOpen;
+
   return (
-    <nav style={{
-      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-      padding: '0 48px', height: 72,
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      background: scrolled ? 'rgba(16,11,4,0.93)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(16px)' : 'none',
-      borderBottom: `1px solid ${scrolled ? 'rgba(255,179,29,0.12)' : 'transparent'}`,
-      transition: 'all 0.4s ease',
-    }}>
-      <a href="#hero" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-        <img src="/default-monochrome.svg" alt="Varadanam" style={{ height: 40, width: 'auto', display: 'block' }} />
-      </a>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
-        {[['Features', '#features'], ['How it works', '#how-it-works'], ['Pricing', '#']].map(([label, href]) => (
-          <a key={label} href={href} style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5, letterSpacing: '0.02em', transition: 'color 0.2s' }}
-            onMouseEnter={e => e.target.style.color = '#fff'}
-            onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.7)'}
-          >{label}</a>
-        ))}
-        <Link to="/blog" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5, letterSpacing: '0.02em', transition: 'color 0.2s' }}
-          onMouseEnter={e => e.target.style.color = '#fff'}
-          onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.7)'}
-        >Blog</Link>
-        <Link to="/temple-history" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5, letterSpacing: '0.02em', transition: 'color 0.2s' }}
-          onMouseEnter={e => e.target.style.color = '#FFB31D'}
-          onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.7)'}
-        >Temple History</Link>
-        <a href="#demo" onClick={e => { e.preventDefault(); onDemo && onDemo(); }} style={{
-          background: '#FF6906', color: '#fff', textDecoration: 'none',
-          fontSize: 14, fontWeight: 500, padding: '10px 22px', borderRadius: 8,
-          transition: 'all 0.2s', boxShadow: '0 2px 12px rgba(255,105,6,0.3)',
-        }}
-          onMouseEnter={e => { e.target.style.background = '#e55a00'; e.target.style.boxShadow = '0 4px 20px rgba(255,105,6,0.45)'; }}
-          onMouseLeave={e => { e.target.style.background = '#FF6906'; e.target.style.boxShadow = '0 2px 12px rgba(255,105,6,0.3)'; }}
-        >Request a Demo</a>
-      </div>
-    </nav>
+    <>
+      <nav style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+        padding: isMobile ? '0 20px' : '0 48px', height: 72,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        background: solid ? 'rgba(16,11,4,0.97)' : 'transparent',
+        backdropFilter: solid ? 'blur(16px)' : 'none',
+        borderBottom: `1px solid ${solid ? 'rgba(255,179,29,0.12)' : 'transparent'}`,
+        transition: 'all 0.4s ease',
+      }}>
+        <a href="#hero" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <img src="/default-monochrome.svg" alt="Varadanam" style={{ height: 36, width: 'auto', display: 'block' }} />
+        </a>
+
+        {isMobile ? (
+          <button onClick={() => setMenuOpen(o => !o)} aria-label="Menu" style={{
+            background: 'none', border: 'none', cursor: 'pointer', padding: 8,
+            display: 'flex', flexDirection: 'column', gap: 5, alignItems: 'center',
+          }}>
+            <span style={{ display: 'block', width: 22, height: 2, background: menuOpen ? '#FF6906' : '#faf6ef', transition: 'all 0.25s', transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
+            <span style={{ display: 'block', width: 22, height: 2, background: '#faf6ef', transition: 'all 0.25s', opacity: menuOpen ? 0 : 1 }} />
+            <span style={{ display: 'block', width: 22, height: 2, background: menuOpen ? '#FF6906' : '#faf6ef', transition: 'all 0.25s', transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }} />
+          </button>
+        ) : (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
+            {[['Features', '#features'], ['How it works', '#how-it-works'], ['Pricing', '#']].map(([label, href]) => (
+              <a key={label} href={href} style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5, letterSpacing: '0.02em', transition: 'color 0.2s' }}
+                onMouseEnter={e => e.target.style.color = '#fff'}
+                onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.7)'}
+              >{label}</a>
+            ))}
+            <Link to="/blog" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5, letterSpacing: '0.02em', transition: 'color 0.2s' }}
+              onMouseEnter={e => e.target.style.color = '#fff'}
+              onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.7)'}
+            >Blog</Link>
+            <Link to="/temple-history" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5, letterSpacing: '0.02em', transition: 'color 0.2s' }}
+              onMouseEnter={e => e.target.style.color = '#FFB31D'}
+              onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.7)'}
+            >Temple History</Link>
+            <a href="#demo" onClick={e => { e.preventDefault(); onDemo && onDemo(); }} style={{
+              background: '#FF6906', color: '#fff', textDecoration: 'none',
+              fontSize: 14, fontWeight: 500, padding: '10px 22px', borderRadius: 8,
+              transition: 'all 0.2s', boxShadow: '0 2px 12px rgba(255,105,6,0.3)',
+            }}
+              onMouseEnter={e => { e.target.style.background = '#e55a00'; e.target.style.boxShadow = '0 4px 20px rgba(255,105,6,0.45)'; }}
+              onMouseLeave={e => { e.target.style.background = '#FF6906'; e.target.style.boxShadow = '0 2px 12px rgba(255,105,6,0.3)'; }}
+            >Request a Demo</a>
+          </div>
+        )}
+      </nav>
+
+      {/* Mobile slide-down menu */}
+      {isMobile && menuOpen && (
+        <div style={{
+          position: 'fixed', top: 72, left: 0, right: 0, zIndex: 99,
+          background: 'rgba(10,7,2,0.98)', backdropFilter: 'blur(16px)',
+          borderBottom: '1px solid rgba(255,179,29,0.12)',
+          padding: '8px 20px 28px',
+        }}>
+          {[['Features', '#features'], ['How it works', '#how-it-works'], ['Pricing', '#']].map(([label, href]) => (
+            <a key={label} href={href} onClick={() => setMenuOpen(false)} style={{
+              display: 'block', color: 'rgba(250,246,239,0.75)', textDecoration: 'none',
+              fontSize: 17, padding: '13px 0',
+              borderBottom: '1px solid rgba(255,179,29,0.08)',
+              fontFamily: 'DM Sans, sans-serif',
+            }}>{label}</a>
+          ))}
+          <Link to="/blog" onClick={() => setMenuOpen(false)} style={{
+            display: 'block', color: 'rgba(250,246,239,0.75)', textDecoration: 'none',
+            fontSize: 17, padding: '13px 0',
+            borderBottom: '1px solid rgba(255,179,29,0.08)',
+            fontFamily: 'DM Sans, sans-serif',
+          }}>Blog</Link>
+          <Link to="/temple-history" onClick={() => setMenuOpen(false)} style={{
+            display: 'block', color: '#FFB31D', textDecoration: 'none',
+            fontSize: 17, padding: '13px 0',
+            borderBottom: '1px solid rgba(255,179,29,0.08)',
+            fontFamily: 'DM Sans, sans-serif',
+          }}>Temple History</Link>
+          <a href="#demo" onClick={e => { e.preventDefault(); setMenuOpen(false); onDemo && onDemo(); }} style={{
+            display: 'block', background: '#FF6906', color: '#fff', textDecoration: 'none',
+            fontSize: 15, fontWeight: 600, padding: '14px 24px', borderRadius: 8,
+            marginTop: 20, textAlign: 'center', fontFamily: 'DM Sans, sans-serif',
+          }}>Request a Demo</a>
+        </div>
+      )}
+    </>
   );
 }
 
 /* ── Hero ── */
 function Hero({ onDemo }) {
+  const isMobile = useIsMobile();
   const [vis, setVis] = useState(false);
   useEffect(() => { setTimeout(() => setVis(true), 80); }, []);
 
@@ -196,19 +252,18 @@ function Hero({ onDemo }) {
         {/* Stats */}
         <div style={{
           ...fadeUp(500),
-          display: 'flex', gap: 0, justifyContent: 'center',
-          marginTop: 72,
-          padding: '32px 0 0',
+          display: 'flex', gap: 0, justifyContent: 'center', flexWrap: 'wrap',
+          marginTop: 56, padding: '32px 0 0',
           borderTop: '1px solid rgba(255,179,29,0.1)',
         }}>
           {STATS.map((s, i) => (
             <div key={s.label} style={{
-              padding: '0 40px',
-              borderRight: i < STATS.length - 1 ? '1px solid rgba(255,179,29,0.12)' : 'none',
+              padding: isMobile ? '12px 24px' : '0 40px',
+              borderRight: !isMobile && i < STATS.length - 1 ? '1px solid rgba(255,179,29,0.12)' : 'none',
               textAlign: 'center',
             }}>
-              <div style={{ fontFamily: 'Playfair Display, serif', fontSize: 32, color: '#FFB31D', lineHeight: 1 }}>{s.num}</div>
-              <div style={{ fontSize: 13, color: 'rgba(250,246,239,0.5)', letterSpacing: '0.06em', marginTop: 6, textTransform: 'uppercase' }}>{s.label}</div>
+              <div style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 28 : 32, color: '#FFB31D', lineHeight: 1 }}>{s.num}</div>
+              <div style={{ fontSize: 12, color: 'rgba(250,246,239,0.5)', letterSpacing: '0.06em', marginTop: 6, textTransform: 'uppercase' }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -293,10 +348,11 @@ function FeatureCard({ feature }) {
 }
 
 function FeaturesSection() {
+  const isMobile = useIsMobile();
   return (
-    <section id="features" style={{ background: '#faf6ef', padding: '100px 48px' }}>
+    <section id="features" style={{ background: '#faf6ef', padding: isMobile ? '64px 20px' : '100px 48px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ marginBottom: 64 }}>
+        <div style={{ marginBottom: isMobile ? 40 : 64 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
             <div style={{ width: 28, height: 1, background: '#f96404' }} />
             <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#f96404', fontFamily: 'DM Sans, sans-serif' }}>Features</span>
@@ -311,7 +367,7 @@ function FeaturesSection() {
         </div>
 
         <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2,
+          display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 2,
           background: 'rgba(42,26,6,0.07)', borderRadius: 16, overflow: 'hidden',
           border: '1px solid rgba(42,26,6,0.07)',
         }}>
@@ -320,30 +376,23 @@ function FeaturesSection() {
 
         {/* Trust bar */}
         <div style={{
-          marginTop: 56, padding: '28px 36px', background: '#fff', borderRadius: 12,
-          border: '1px solid rgba(42,26,6,0.08)', display: 'flex', alignItems: 'center', gap: 0, flexWrap: 'wrap',
+          marginTop: 48, padding: isMobile ? '20px' : '28px 36px', background: '#fff', borderRadius: 12,
+          border: '1px solid rgba(42,26,6,0.08)', display: 'flex', alignItems: 'center',
+          flexWrap: 'wrap', gap: isMobile ? 16 : 0,
         }}>
-          <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#7a6a54', fontFamily: 'DM Sans, sans-serif', marginRight: 32, whiteSpace: 'nowrap' }}>Works with</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 28px', borderRight: '1px solid rgba(42,26,6,0.08)' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17.5 3L6 14.5l4 1.5L7.5 21 19 9.5l-4-1.5L17.5 3z" fill="#2D9EE0" /></svg>
-            <span style={{ fontSize: 15, fontWeight: 600, color: '#072654', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.02em' }}>razorpay</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 28px', borderRight: '1px solid rgba(42,26,6,0.08)' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.979-1.401A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm-1.5 13.5c-2.5-1.333-4-3.5-4.167-3.833-.167-.333-.083-.583.083-.75l.584-.583c.166-.167.25-.25.333-.417.083-.167 0-.333-.083-.5L6.5 8.5c-.083-.167-.25-.333-.417-.25-.583.25-1.5.833-1.583 1.75C4.417 11 5.25 12.917 7.25 15c2 2.083 3.917 2.833 5.25 2.833.917 0 1.5-.916 1.75-1.5.083-.166-.083-.333-.25-.416l-1.667-.75c-.166-.083-.333-.167-.5-.083-.166.083-.25.166-.416.333-.167.167-.417.25-.667.083z" fill="#25D366" /></svg>
-            <span style={{ fontSize: 15, fontWeight: 600, color: '#128C7E', fontFamily: 'DM Sans, sans-serif' }}>WhatsApp</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 28px', borderRight: '1px solid rgba(42,26,6,0.08)' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f96404" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" /></svg>
-            <span style={{ fontSize: 15, fontWeight: 600, color: '#2a1a06', fontFamily: 'DM Sans, sans-serif' }}>SMS</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 28px', borderRight: '1px solid rgba(42,26,6,0.08)' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f96404" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12" y2="18" /></svg>
-            <span style={{ fontSize: 15, fontWeight: 600, color: '#2a1a06', fontFamily: 'DM Sans, sans-serif' }}>Any Device</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 28px' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f96404" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20" /></svg>
-            <span style={{ fontSize: 15, fontWeight: 600, color: '#2a1a06', fontFamily: 'DM Sans, sans-serif' }}>Multi-language</span>
-          </div>
+          <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#7a6a54', fontFamily: 'DM Sans, sans-serif', marginRight: isMobile ? 0 : 32, width: isMobile ? '100%' : 'auto' }}>Works with</span>
+          {[
+            { svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17.5 3L6 14.5l4 1.5L7.5 21 19 9.5l-4-1.5L17.5 3z" fill="#2D9EE0" /></svg>, label: 'razorpay', color: '#072654' },
+            { svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.979-1.401A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm-1.5 13.5c-2.5-1.333-4-3.5-4.167-3.833-.167-.333-.083-.583.083-.75l.584-.583c.166-.167.25-.25.333-.417.083-.167 0-.333-.083-.5L6.5 8.5c-.083-.167-.25-.333-.417-.25-.583.25-1.5.833-1.583 1.75C4.417 11 5.25 12.917 7.25 15c2 2.083 3.917 2.833 5.25 2.833.917 0 1.5-.916 1.75-1.5.083-.166-.083-.333-.25-.416l-1.667-.75c-.166-.083-.333-.167-.5-.083-.166.083-.25.166-.416.333-.167.167-.417.25-.667.083z" fill="#25D366" /></svg>, label: 'WhatsApp', color: '#128C7E' },
+            { svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f96404" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" /></svg>, label: 'SMS', color: '#2a1a06' },
+            { svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f96404" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12" y2="18" /></svg>, label: 'Any Device', color: '#2a1a06' },
+            { svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f96404" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20" /></svg>, label: 'Multi-language', color: '#2a1a06' },
+          ].map((item, idx, arr) => (
+            <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: isMobile ? '0' : `0 ${idx === arr.length - 1 ? '28px' : '28px'}`, borderRight: !isMobile && idx < arr.length - 1 ? '1px solid rgba(42,26,6,0.08)' : 'none' }}>
+              {item.svg}
+              <span style={{ fontSize: 14, fontWeight: 600, color: item.color, fontFamily: 'DM Sans, sans-serif' }}>{item.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -554,8 +603,9 @@ function HowItWorksCard({ step }) {
 }
 
 function HowItWorksSection() {
+  const isMobile = useIsMobile();
   return (
-    <section id="how-it-works" style={{ background: '#0e0904', padding: '100px 48px', position: 'relative', overflow: 'hidden' }}>
+    <section id="how-it-works" style={{ background: '#0e0904', padding: isMobile ? '64px 20px' : '100px 48px', position: 'relative', overflow: 'hidden' }}>
       <div style={{
         position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%,-50%)',
         width: 600, height: 400,
@@ -578,21 +628,21 @@ function HowItWorksSection() {
         </div>
 
         <div style={{ position: 'relative' }}>
-          <div style={{
+          {!isMobile && <div style={{
             position: 'absolute', top: 36, left: 'calc(12.5% + 28px)', right: 'calc(12.5% + 28px)',
             height: 1, background: 'linear-gradient(90deg, #FF6906, #FFB31D, #FF6906)',
             opacity: 0.2, pointerEvents: 'none',
-          }} />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 32 }}>
+          }} />}
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4,1fr)', gap: isMobile ? 20 : 32 }}>
             {STEPS.map(step => <HowItWorksCard key={step.num} step={step} />)}
           </div>
         </div>
 
         <div style={{
-          marginTop: 80, padding: '36px 48px',
+          marginTop: isMobile ? 48 : 80, padding: isMobile ? '24px 20px' : '36px 48px',
           background: 'rgba(255,179,29,0.05)',
           border: '1px solid rgba(255,179,29,0.12)',
-          borderRadius: 14, display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap',
+          borderRadius: 14, display: 'flex', alignItems: isMobile ? 'flex-start' : 'center', gap: 24, flexWrap: 'wrap', flexDirection: isMobile ? 'column' : 'row',
         }}>
           <div style={{ fontSize: 32, opacity: 0.4, fontFamily: 'Georgia, serif', color: '#FFB31D', lineHeight: 1, flexShrink: 0 }}>"</div>
           <p style={{ fontFamily: 'Lora, serif', fontStyle: 'italic', fontSize: 16, color: 'rgba(250,246,239,0.65)', lineHeight: 1.7, flex: 1 }}>
@@ -609,9 +659,10 @@ function HowItWorksSection() {
 }
 
 function PreviewSection() {
+  const isMobile = useIsMobile();
   const [tab, setTab] = useState(0);
   return (
-    <section id="preview" style={{ background: '#0e0904', padding: '100px 48px', overflow: 'hidden' }}>
+    <section id="preview" style={{ background: '#0e0904', padding: isMobile ? '64px 20px' : '100px 48px', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ marginBottom: 52, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24 }}>
           <div>
@@ -636,7 +687,9 @@ function PreviewSection() {
           </div>
         </div>
 
-        <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 40px 100px rgba(0,0,0,0.5)' }}>
+        <div style={{ borderRadius: 16, overflow: isMobile ? 'auto' : 'hidden', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 40px 100px rgba(0,0,0,0.5)', WebkitOverflowScrolling: 'touch' }}>
+          {isMobile && <div style={{ padding: '10px 16px', background: 'rgba(255,179,29,0.08)', fontSize: 11.5, color: 'rgba(250,246,239,0.4)', textAlign: 'center', fontFamily: 'DM Sans, sans-serif' }}>← Scroll to explore →</div>}
+          <div style={{ minWidth: isMobile ? 720 : 'auto' }}>
           {/* Browser chrome */}
           <div style={{ background: '#1c1409', padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 10, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', gap: 6 }}>
@@ -683,7 +736,7 @@ function PreviewSection() {
               {tab === 2 && <SevaMock />}
             </div>
           </div>
-        </div>
+        </div></div>{/* end minWidth wrapper */}
       </div>
     </section>
   );
@@ -747,10 +800,11 @@ function TestimonialCard({ t }) {
 }
 
 function TestimonialsSection({ onDemo }) {
+  const isMobile = useIsMobile();
   return (
-    <section id="testimonials" style={{ background: '#faf6ef', padding: '100px 48px' }}>
+    <section id="testimonials" style={{ background: '#faf6ef', padding: isMobile ? '64px 20px' : '100px 48px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ marginBottom: 64, textAlign: 'center' }}>
+        <div style={{ marginBottom: isMobile ? 40 : 64, textAlign: 'center' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
             <div style={{ width: 28, height: 1, background: '#FF6906' }} />
             <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#FF6906', fontFamily: 'DM Sans, sans-serif' }}>Testimonials</span>
@@ -764,16 +818,18 @@ function TestimonialsSection({ onDemo }) {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginBottom: 72 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 24, marginBottom: isMobile ? 48 : 72 }}>
           {TESTIMONIALS.map((t, i) => <TestimonialCard key={i} t={t} />)}
         </div>
 
         {/* CTA band */}
         <div style={{
           background: 'linear-gradient(135deg, #1a1108 0%, #2a1a08 100%)',
-          borderRadius: 16, padding: '56px 64px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          gap: 32, flexWrap: 'wrap', position: 'relative', overflow: 'hidden',
+          borderRadius: 16, padding: isMobile ? '36px 24px' : '56px 64px',
+          display: 'flex', alignItems: isMobile ? 'flex-start' : 'center',
+          justifyContent: 'space-between',
+          gap: 32, flexWrap: 'wrap', flexDirection: isMobile ? 'column' : 'row',
+          position: 'relative', overflow: 'hidden',
         }}>
           <div style={{ position: 'absolute', right: -100, top: '50%', transform: 'translateY(-50%)', width: 400, height: 400, borderRadius: '50%', border: '1px solid rgba(255,179,29,0.1)', pointerEvents: 'none' }} />
           <div style={{ position: 'absolute', right: -60, top: '50%', transform: 'translateY(-50%)', width: 280, height: 280, borderRadius: '50%', border: '1px solid rgba(255,105,6,0.1)', pointerEvents: 'none' }} />
@@ -813,10 +869,11 @@ function TestimonialsSection({ onDemo }) {
 
 /* ── Footer ── */
 function Footer() {
+  const isMobile = useIsMobile();
   return (
-    <footer style={{ background: '#080500', borderTop: '1px solid rgba(255,179,29,0.1)', padding: '72px 48px 36px' }}>
+    <footer style={{ background: '#080500', borderTop: '1px solid rgba(255,179,29,0.1)', padding: isMobile ? '48px 20px 32px' : '72px 48px 36px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 48, marginBottom: 64 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : '2fr 1fr 1fr 1fr', gap: isMobile ? 32 : 48, marginBottom: isMobile ? 40 : 64 }}>
           <div>
             <img src="/default-monochrome.svg" alt="Varadanam" style={{ height: 36, width: 'auto', marginBottom: 20 }} />
             <p style={{ fontSize: 14, lineHeight: 1.7, color: 'rgba(250,246,239,0.45)', fontFamily: 'Lora, serif', fontStyle: 'italic', maxWidth: 280, marginBottom: 28 }}>
@@ -922,10 +979,22 @@ function DemoModal({ open, onClose }) {
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setSubmitting(true);
-    setTimeout(() => { setSubmitting(false); setDone(true); }, 1400);
+    try {
+      const res = await fetch('/api/demo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error('Request failed');
+      setDone(true);
+    } catch {
+      alert('Something went wrong. Please email us directly at hello@varadanam.com');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputStyle = {
@@ -1079,11 +1148,12 @@ function DemoModal({ open, onClose }) {
 
 /* ── Blog Preview ── */
 function BlogPreview() {
+  const isMobile = useIsMobile();
   function formatDate(dateStr) {
     return new Date(dateStr).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
   }
   return (
-    <section style={{ background: '#0e0904', padding: '100px 48px' }}>
+    <section style={{ background: '#0e0904', padding: isMobile ? '64px 20px' : '100px 48px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 52, flexWrap: 'wrap', gap: 24 }}>
           <div>
@@ -1111,7 +1181,7 @@ function BlogPreview() {
           </Link>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 24 }}>
           {posts.map(post => (
             <Link key={post.slug} to={`/blog/${post.slug}`} style={{ textDecoration: 'none' }}>
               <article style={{

@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { getPost, posts } from './blogPosts.js';
+import { useIsMobile } from './useIsMobile.js';
 
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -75,6 +76,7 @@ function renderLinks(text) {
 export default function BlogPost() {
   const { slug } = useParams();
   const post = getPost(slug);
+  const isMobile = useIsMobile();
 
   if (!post) {
     return (
@@ -94,27 +96,27 @@ export default function BlogPost() {
       {/* Navbar */}
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        padding: '0 48px', height: 72,
+        padding: isMobile ? '0 20px' : '0 48px', height: 72,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         background: 'rgba(16,11,4,0.93)', backdropFilter: 'blur(16px)',
         borderBottom: '1px solid rgba(255,179,29,0.12)',
       }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-          <img src="/default-monochrome.svg" alt="Varadanam" style={{ height: 40, width: 'auto' }} />
+          <img src="/default-monochrome.svg" alt="Varadanam" style={{ height: 36, width: 'auto' }} />
         </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
-          <Link to="/#features" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5 }}>Features</Link>
-          <Link to="/blog" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5 }}>Blog</Link>
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 16 : 36 }}>
+          {!isMobile && <Link to="/#features" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5 }}>Features</Link>}
+          {!isMobile && <Link to="/blog" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5 }}>Blog</Link>}
           <Link to="/" style={{
             background: '#FF6906', color: '#fff', textDecoration: 'none',
-            fontSize: 14, fontWeight: 500, padding: '10px 22px', borderRadius: 8,
+            fontSize: 14, fontWeight: 500, padding: '9px 18px', borderRadius: 8,
           }}>Request a Demo</Link>
         </div>
       </nav>
 
       <div style={{ paddingTop: 72 }}>
         {/* Article header */}
-        <div style={{ maxWidth: 760, margin: '0 auto', padding: '72px 32px 48px' }}>
+        <div style={{ maxWidth: 760, margin: '0 auto', padding: isMobile ? '48px 20px 32px' : '72px 32px 48px' }}>
           <Link to="/blog" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'rgba(250,246,239,0.4)', textDecoration: 'none', fontFamily: 'DM Sans, sans-serif', fontSize: 13.5, marginBottom: 40 }}
             onMouseEnter={e => e.currentTarget.style.color = '#FF6906'}
             onMouseLeave={e => e.currentTarget.style.color = 'rgba(250,246,239,0.4)'}
@@ -139,17 +141,17 @@ export default function BlogPost() {
         </div>
 
         {/* Divider */}
-        <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 32px' }}>
+        <div style={{ maxWidth: 760, margin: '0 auto', padding: isMobile ? '0 20px' : '0 32px' }}>
           <div style={{ height: 1, background: 'linear-gradient(90deg, #FF6906, rgba(255,179,29,0.3), transparent)' }} />
         </div>
 
         {/* Article body */}
-        <div style={{ maxWidth: 760, margin: '0 auto', padding: '48px 32px 80px' }}>
+        <div style={{ maxWidth: 760, margin: '0 auto', padding: isMobile ? '32px 20px 60px' : '48px 32px 80px' }}>
           {renderContent(post.content)}
         </div>
 
         {/* CTA box */}
-        <div style={{ maxWidth: 760, margin: '0 auto 80px', padding: '0 32px' }}>
+        <div style={{ maxWidth: 760, margin: '0 auto 60px', padding: isMobile ? '0 20px' : '0 32px' }}>
           <div style={{
             background: 'linear-gradient(135deg, #1a1108 0%, #2a1a08 100%)',
             borderRadius: 14, padding: '40px 48px',
@@ -171,7 +173,7 @@ export default function BlogPost() {
 
         {/* Related posts */}
         {otherPosts.length > 0 && (
-          <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 32px 80px' }}>
+          <div style={{ maxWidth: 760, margin: '0 auto', padding: isMobile ? '0 20px 60px' : '0 32px 80px' }}>
             <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#FF6906', fontFamily: 'DM Sans, sans-serif', marginBottom: 24 }}>More Articles</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
               {otherPosts.map(p => (
@@ -194,7 +196,7 @@ export default function BlogPost() {
         )}
 
         {/* Footer */}
-        <div style={{ borderTop: '1px solid rgba(255,179,29,0.1)', padding: '32px 48px', textAlign: 'center' }}>
+        <div style={{ borderTop: '1px solid rgba(255,179,29,0.1)', padding: '32px 20px', textAlign: 'center' }}>
           <span style={{ fontSize: 13, color: 'rgba(250,246,239,0.3)', fontFamily: 'Lora, serif', fontStyle: 'italic' }}>
             © 2026 Varadanam. Made with devotion in India.
           </span>

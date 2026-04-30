@@ -7,6 +7,12 @@ export const temples = [
     established: 'Pre-historic (legend); present structure ~15th century',
     excerpt: 'The most sacred Vaishnavite temple in Kerala — where Lord Vishnu stands in his four-armed Vishnu roopam on a lotus, in a temple said to be 5,000 years old, installed by the gods themselves when Dwaraka was submerged.',
     heroTag: 'Bhooloka Vaikuntam',
+    heroImage: {
+      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Guruvayur_Temple_top_view.JPG/1200px-Guruvayur_Temple_top_view.JPG',
+      alt: 'Aerial view of Guruvayur Sree Krishna Temple, Thrissur, Kerala',
+      caption: 'Guruvayur Sree Krishna Temple — aerial view of the temple complex in Thrissur district, Kerala.',
+      credit: 'Wikimedia Commons',
+    },
     quickFacts: [
       { label: 'District', value: 'Thrissur, Kerala' },
       { label: 'Deity', value: 'Guruvayurappan (Sree Krishna)' },
@@ -76,6 +82,11 @@ After Tipu Sultan's defeat in the Fourth Anglo-Mysore War and his death in 1799,
       },
       {
         heading: 'Architecture — Kerala\'s Sacred Blueprint',
+        image: {
+          src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/SreeKrishnaTemple%2CGuruvayur.JPG/960px-SreeKrishnaTemple%2CGuruvayur.JPG',
+          alt: 'Eastern entrance of Guruvayur Sree Krishna Temple',
+          caption: 'The eastern gopuram (entrance tower) of Guruvayur temple. Photo: Aruna / Wikimedia Commons (CC BY-SA 3.0)',
+        },
         body: `The Guruvayur temple is a defining example of Kerala's traditional Thachu Shastra temple architecture — a school of sacred construction codified in ancient texts like the Thachu Shastra and the Tantrasamuchaya.
 
 **The Sreekovil (Sanctum Sanctorum)**
@@ -154,6 +165,11 @@ The 41-day Mandala observance leading up to the Malayalam month of Dhanu (Decemb
       },
       {
         heading: 'The Elephants of Guruvayur',
+        image: {
+          src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Elephant_sanctuary_Guruvayur.jpg/1200px-Elephant_sanctuary_Guruvayur.jpg',
+          alt: 'Elephants and their mahouts at the Guruvayur elephant sanctuary, Punnathur Kotta',
+          caption: 'Elephants and mahouts at Punnathur Kotta, the Guruvayur Devaswom elephant sanctuary. Photo: SPat / Wikimedia Commons (CC BY-SA 3.0)',
+        },
         body: `No account of Guruvayur is complete without its elephants. The Guruvayur Devaswom maintains one of the largest captive elephant herds in the world — currently over 50 elephants — at Punnathur Kotta, a historic palace about three kilometres from the temple that was donated to the Devaswom in 1975.
 
 Devotees donate elephants to the temple as a supreme act of piety. Once donated, an elephant becomes the Lord's own — it serves in temple processions, Seeveli, and the Gajamela festival, and is cared for by mahouts employed by the Devaswom.
