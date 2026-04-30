@@ -118,7 +118,7 @@ export default function TempleHistory() {
             Coming Soon
           </div>
           <div style={{ fontFamily: 'Playfair Display, serif', fontSize: 18, color: 'rgba(250,246,239,0.4)', marginBottom: 8 }}>
-            Padmanabhaswamy Temple · Sabarimala · Vaikom Mahadeva Temple · Ettumanoor Mahadeva Temple
+            Ettumanoor Mahadeva Temple · Attukal Bhagavathy Temple · Thrissur Vadakkunnathan Temple · Ambalappuzha Sree Krishna Temple
           </div>
           <div style={{ fontFamily: 'Lora, serif', fontStyle: 'italic', fontSize: 13.5, color: 'rgba(250,246,239,0.25)' }}>
             More temples added regularly
