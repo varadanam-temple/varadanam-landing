@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import OurStory from './OurStory.jsx';
+import Blog from './Blog.jsx';
+import BlogPost from './BlogPost.jsx';
+import { posts } from './blogPosts.js';
 import './index.css';
 
 /* ── Shared: MandalaBg ── */
@@ -49,6 +52,10 @@ function Navbar({ scrolled, onDemo }) {
             onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.7)'}
           >{label}</a>
         ))}
+        <Link to="/blog" style={{ color: 'rgba(250,246,239,0.7)', textDecoration: 'none', fontSize: 14.5, letterSpacing: '0.02em', transition: 'color 0.2s' }}
+          onMouseEnter={e => e.target.style.color = '#fff'}
+          onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.7)'}
+        >Blog</Link>
         <a href="#demo" onClick={e => { e.preventDefault(); onDemo && onDemo(); }} style={{
           background: '#FF6906', color: '#fff', textDecoration: 'none',
           fontSize: 14, fontWeight: 500, padding: '10px 22px', borderRadius: 8,
@@ -1064,6 +1071,76 @@ function DemoModal({ open, onClose }) {
   );
 }
 
+/* ── Blog Preview ── */
+function BlogPreview() {
+  function formatDate(dateStr) {
+    return new Date(dateStr).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  return (
+    <section style={{ background: '#0e0904', padding: '100px 48px' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 52, flexWrap: 'wrap', gap: 24 }}>
+          <div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+              <div style={{ width: 28, height: 1, background: '#FF6906' }} />
+              <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#FF6906', fontFamily: 'DM Sans, sans-serif' }}>Blog</span>
+            </div>
+            <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 400, color: '#faf6ef', lineHeight: 1.15 }}>
+              Insights for temple trustees<br /><span style={{ color: '#FF6906' }}>across Kerala & India.</span>
+            </h2>
+          </div>
+          <Link to="/blog" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            color: 'rgba(250,246,239,0.6)', textDecoration: 'none', fontSize: 14,
+            border: '1px solid rgba(250,246,239,0.15)', padding: '10px 20px', borderRadius: 8,
+            fontFamily: 'DM Sans, sans-serif', transition: 'all 0.2s',
+          }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,179,29,0.4)'; e.currentTarget.style.color = '#FFB31D'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(250,246,239,0.15)'; e.currentTarget.style.color = 'rgba(250,246,239,0.6)'; }}
+          >
+            View all articles
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M2 7h10M7 2l5 5-5 5" />
+            </svg>
+          </Link>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+          {posts.map(post => (
+            <Link key={post.slug} to={`/blog/${post.slug}`} style={{ textDecoration: 'none' }}>
+              <article style={{
+                background: 'rgba(255,179,29,0.04)',
+                border: '1px solid rgba(255,179,29,0.1)',
+                borderRadius: 14, padding: '28px',
+                transition: 'border-color 0.2s, transform 0.2s', height: '100%',
+              }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,105,6,0.4)'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,179,29,0.1)'; e.currentTarget.style.transform = 'none'; }}
+              >
+                <div style={{ fontSize: 11.5, color: 'rgba(250,246,239,0.3)', fontFamily: 'DM Sans, sans-serif', marginBottom: 14 }}>
+                  {formatDate(post.date)}
+                </div>
+                <h3 style={{ fontFamily: 'Playfair Display, serif', fontSize: 18, fontWeight: 400, color: '#faf6ef', lineHeight: 1.35, marginBottom: 12 }}>
+                  {post.title}
+                </h3>
+                <p style={{ fontFamily: 'Lora, serif', fontStyle: 'italic', fontSize: 13.5, color: 'rgba(250,246,239,0.45)', lineHeight: 1.7, marginBottom: 20 }}>
+                  {post.excerpt}
+                </p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: '#FF6906', fontSize: 13, fontFamily: 'DM Sans, sans-serif', fontWeight: 500 }}>
+                  Read article
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <path d="M2 7h10M7 2l5 5-5 5" />
+                  </svg>
+                </div>
+              </article>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ── Home ── */
 function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -1083,6 +1160,7 @@ function Home() {
       <HowItWorksSection />
       <PreviewSection />
       <TestimonialsSection onDemo={() => setDemoOpen(true)} />
+      <BlogPreview />
       <Footer />
       <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
     </>
@@ -1094,6 +1172,8 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/our-story" element={<OurStory />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
     </Routes>
   );
 }
