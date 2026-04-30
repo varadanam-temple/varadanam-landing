@@ -148,7 +148,7 @@ function Hero({ onDemo }) {
           maxWidth: 600,
           margin: '0 auto 48px',
         }}>
-          India's complete temple management software — online seva &amp; pooja booking, counter billing, devotee management, donation tracking, and a branded temple website.
+          India's complete temple management software — online vazhipadu &amp; seva booking, counter billing, devotee management, donation tracking, and a branded temple website.
         </p>
 
         {/* CTAs */}
@@ -217,8 +217,8 @@ function Hero({ onDemo }) {
 const FEATURES = [
   {
     icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z" /><circle cx="12" cy="9" r="2.5" /></svg>,
-    title: 'Online Seva Booking',
-    desc: 'Devotees can browse, book, and pay for sevas from anywhere — on mobile or desktop. Automated confirmations and receipts.',
+    title: 'Online Vazhipadu & Seva Booking',
+    desc: 'Devotees can browse, book, and pay for vazhipadu and sevas from anywhere — on mobile or desktop. Automated WhatsApp confirmations and receipts.',
   },
   {
     icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M2 10h20M6 15h4M14 15h4" /></svg>,
@@ -769,7 +769,7 @@ function TestimonialsSection({ onDemo }) {
               Ready to modernise your temple?
             </h3>
             <p style={{ fontFamily: 'Lora, serif', fontStyle: 'italic', fontSize: 16, color: 'rgba(250,246,239,0.55)', maxWidth: 420 }}>
-              Join 200+ Hindu temples across India already using Varadanam's temple management software. Setup takes less than a day.
+              Join 200+ Hindu temples across Kerala and India already using Varadanam's temple management software. Setup takes less than a day.
             </p>
           </div>
           <div style={{ display: 'flex', gap: 14, flexShrink: 0, position: 'relative' }}>
@@ -807,7 +807,7 @@ function Footer() {
           <div>
             <img src="/default-monochrome.svg" alt="Varadanam" style={{ height: 36, width: 'auto', marginBottom: 20 }} />
             <p style={{ fontSize: 14, lineHeight: 1.7, color: 'rgba(250,246,239,0.45)', fontFamily: 'Lora, serif', fontStyle: 'italic', maxWidth: 280, marginBottom: 28 }}>
-              India's complete temple management software — online seva booking, pooja management, devotee database, and donation tracking for Hindu temples.
+              India's complete temple management software — online vazhipadu booking, seva & pooja management, devotee database, and donation tracking for Hindu temples across Kerala and India.
             </p>
             <div style={{ display: 'flex', gap: 12 }}>
               {[
