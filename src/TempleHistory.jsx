@@ -1,9 +1,20 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { temples } from './templeHistories.js';
 import { useIsMobile } from './useIsMobile.js';
 
 export default function TempleHistory() {
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    document.title = 'Kerala Temple History — Ancient Temples, Legends & Architecture | Varadanam';
+    document.querySelector('meta[name="description"]')?.setAttribute('content', 'Explore the history, legends, architecture and festivals of famous temples in Kerala. Detailed guides on Guruvayur, Sabarimala, Padmanabhaswamy and more.');
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://varadanam.com/temple-history');
+    return () => {
+      document.title = 'Varadanam — Temple Management Software | Online Vazhipadu & Seva Booking India';
+      document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://varadanam.com/');
+    };
+  }, []);
   return (
     <div style={{ background: '#100b04', minHeight: '100vh' }}>
       {/* Navbar */}

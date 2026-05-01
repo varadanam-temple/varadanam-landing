@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getTemple, temples } from './templeHistories.js';
 import { useIsMobile } from './useIsMobile.js';
@@ -49,6 +50,49 @@ export default function TempleHistoryPost() {
   const { slug } = useParams();
   const temple = getTemple(slug);
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    if (!temple) return;
+    const title = `${temple.name} — History, Significance & Traditions | Varadanam`;
+    const desc = temple.excerpt || `Learn about the history, deity, architecture and festivals of ${temple.name} in ${temple.location}.`;
+    const canonical = `https://varadanam.com/temple-history/${slug}`;
+
+    document.title = title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', desc);
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonical);
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', desc);
+    document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonical);
+
+    // Inject structured data for this temple
+    const existingScript = document.getElementById('temple-ld-json');
+    if (existingScript) existingScript.remove();
+    const script = document.createElement('script');
+    script.id = 'temple-ld-json';
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description: desc,
+      url: canonical,
+      author: { '@type': 'Organization', name: 'Varadanam' },
+      publisher: { '@type': 'Organization', name: 'Varadanam', url: 'https://varadanam.com' },
+      about: {
+        '@type': 'LandmarksOrHistoricalBuildings',
+        name: temple.name,
+        address: { '@type': 'PostalAddress', addressLocality: temple.location, addressCountry: 'IN' },
+      },
+    });
+    document.head.appendChild(script);
+
+    return () => {
+      document.title = 'Varadanam — Temple Management Software | Online Vazhipadu & Seva Booking India';
+      document.querySelector('meta[name="description"]')?.setAttribute('content', 'Varadanam is India\'s temple management software.');
+      document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://varadanam.com/');
+      document.getElementById('temple-ld-json')?.remove();
+    };
+  }, [temple, slug]);
 
   if (!temple) {
     return (
