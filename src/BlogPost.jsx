@@ -97,16 +97,71 @@ export default function BlogPost() {
     const script = document.createElement('script');
     script.id = 'blog-ld-json';
     script.type = 'application/ld+json';
-    script.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'BlogPosting',
-      headline: post.title,
-      description: desc,
-      url: canonical,
-      datePublished: post.date,
-      author: { '@type': 'Organization', name: post.author || 'Varadanam' },
-      publisher: { '@type': 'Organization', name: 'Varadanam', url: 'https://varadanam.com' },
-    });
+    const schemas = [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: desc,
+        url: canonical,
+        datePublished: post.date,
+        author: { '@type': 'Organization', name: post.author || 'Varadanam' },
+        publisher: { '@type': 'Organization', name: 'Varadanam', url: 'https://varadanam.com' },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://varadanam.com/' },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://varadanam.com/blog' },
+          { '@type': 'ListItem', position: 3, name: post.title, item: canonical },
+        ],
+      },
+    ];
+
+    if (slug === 'digitize-temple-seva-bookings-one-day') {
+      schemas.push({
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: post.title,
+        description: desc,
+        url: canonical,
+        step: [
+          {
+            '@type': 'HowToStep',
+            position: 1,
+            name: 'List Your Vazhipadu and Sevas',
+            text: 'Make a complete list of every vazhipadu and seva your temple offers — name in Malayalam and English, price (dakshina), duration, available days, and maximum bookings per time slot.',
+          },
+          {
+            '@type': 'HowToStep',
+            position: 2,
+            name: 'Gather Devotee Booking Requirements',
+            text: 'Set up your digital booking system to capture full name, nakshatram, gothram, rashi, and phone number — details the melshanti needs to prepare for the seva.',
+          },
+          {
+            '@type': 'HowToStep',
+            position: 3,
+            name: 'Set Up Online Payment',
+            text: 'Enable UPI (GPay, PhonePe, Paytm), debit/credit cards, net banking, and international cards for NRI devotees through a payment gateway like Razorpay.',
+          },
+          {
+            '@type': 'HowToStep',
+            position: 4,
+            name: 'Go Live and Inform Devotees',
+            text: 'Share the booking link via your temple WhatsApp group, notice board QR code, and Facebook page. Varadanam onboarding sets everything up and trains kazhakam staff on the same day.',
+          },
+          {
+            '@type': 'HowToStep',
+            position: 5,
+            name: 'Manage the Temple from Your Dashboard',
+            text: "Use the admin dashboard for today's booking list, counter billing for walk-ins, WhatsApp receipts, daily collection reports, and festival slot management.",
+          },
+        ],
+      });
+    }
+
+    script.textContent = JSON.stringify(schemas);
     document.head.appendChild(script);
 
     return () => {

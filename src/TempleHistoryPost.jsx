@@ -70,20 +70,31 @@ export default function TempleHistoryPost() {
     const script = document.createElement('script');
     script.id = 'temple-ld-json';
     script.type = 'application/ld+json';
-    script.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: title,
-      description: desc,
-      url: canonical,
-      author: { '@type': 'Organization', name: 'Varadanam' },
-      publisher: { '@type': 'Organization', name: 'Varadanam', url: 'https://varadanam.com' },
-      about: {
-        '@type': 'LandmarksOrHistoricalBuildings',
-        name: temple.name,
-        address: { '@type': 'PostalAddress', addressLocality: temple.location, addressCountry: 'IN' },
+    script.textContent = JSON.stringify([
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: title,
+        description: desc,
+        url: canonical,
+        author: { '@type': 'Organization', name: 'Varadanam' },
+        publisher: { '@type': 'Organization', name: 'Varadanam', url: 'https://varadanam.com' },
+        about: {
+          '@type': 'LandmarksOrHistoricalBuildings',
+          name: temple.name,
+          address: { '@type': 'PostalAddress', addressLocality: temple.location, addressCountry: 'IN' },
+        },
       },
-    });
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://varadanam.com/' },
+          { '@type': 'ListItem', position: 2, name: 'Temple History', item: 'https://varadanam.com/temple-history' },
+          { '@type': 'ListItem', position: 3, name: temple.name, item: canonical },
+        ],
+      },
+    ]);
     document.head.appendChild(script);
 
     return () => {

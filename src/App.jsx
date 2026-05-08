@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { useIsMobile } from './useIsMobile.js';
-import OurStory from './OurStory.jsx';
-import Blog from './Blog.jsx';
-import BlogPost from './BlogPost.jsx';
-import TempleHistory from './TempleHistory.jsx';
-import TempleHistoryPost from './TempleHistoryPost.jsx';
 import { posts } from './blogPosts.js';
+
+const OurStory = lazy(() => import('./OurStory.jsx'));
+const Blog = lazy(() => import('./Blog.jsx'));
+const BlogPost = lazy(() => import('./BlogPost.jsx'));
+const TempleHistory = lazy(() => import('./TempleHistory.jsx'));
+const TempleHistoryPost = lazy(() => import('./TempleHistoryPost.jsx'));
 import './index.css';
 
 /* ── Shared: MandalaBg ── */
@@ -134,7 +135,7 @@ function Navbar({ scrolled, onDemo }) {
 function Hero({ onDemo }) {
   const isMobile = useIsMobile();
   const [vis, setVis] = useState(false);
-  useEffect(() => { setTimeout(() => setVis(true), 80); }, []);
+  useEffect(() => { setVis(true); }, []);
 
   const fadeUp = (delay = 0) => ({
     opacity: vis ? 1 : 0,
@@ -1245,13 +1246,15 @@ function Home() {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/our-story" element={<OurStory />} />
-      <Route path="/blog" element={<Blog />} />
-      <Route path="/blog/:slug" element={<BlogPost />} />
-      <Route path="/temple-history" element={<TempleHistory />} />
-      <Route path="/temple-history/:slug" element={<TempleHistoryPost />} />
-    </Routes>
+    <Suspense fallback={<div style={{ background: '#100b04', minHeight: '100vh' }} />}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/our-story" element={<OurStory />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/temple-history" element={<TempleHistory />} />
+        <Route path="/temple-history/:slug" element={<TempleHistoryPost />} />
+      </Routes>
+    </Suspense>
   );
 }
