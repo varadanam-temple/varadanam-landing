@@ -57,6 +57,9 @@ server.listen(PORT, async () => {
         baseUrl: BASE,
         outputDir: DIST,
         selectorToWaitFor: 'nav',
+        extraBrowserLaunchOptions: {
+          args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+        },
       });
       totalRendered += visited.length;
       console.log(`  ${startingUrl} → ${visited.length} pages`);
