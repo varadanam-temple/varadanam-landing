@@ -36,14 +36,32 @@ const server = createServer((req, res) => {
   }
 });
 
+// All entry points to ensure full crawl coverage
+// preRenderSite crawls links found on each page, so starting from
+// both / and /temple-history ensures all routes are discovered.
+const STARTING_URLS = [
+  `http://localhost:${PORT}/`,
+  `http://localhost:${PORT}/blog`,
+  `http://localhost:${PORT}/temple-history`,
+  `http://localhost:${PORT}/our-story`,
+];
+
 server.listen(PORT, async () => {
   console.log(`Static server running at http://localhost:${PORT}`);
   try {
-    await preRenderSite({
-      startingUrl: `http://localhost:${PORT}`,
-      outputDir: DIST,
-    });
-    console.log('Prerendering complete.');
+    let totalRendered = 0;
+    const BASE = `http://localhost:${PORT}`;
+    for (const startingUrl of STARTING_URLS) {
+      const visited = await preRenderSite({
+        startingUrl,
+        baseUrl: BASE,
+        outputDir: DIST,
+        selectorToWaitFor: 'nav',
+      });
+      totalRendered += visited.length;
+      console.log(`  ${startingUrl} → ${visited.length} pages`);
+    }
+    console.log(`Prerendering complete. Total: ${totalRendered} pages rendered.`);
   } catch (err) {
     console.error('Prerender error:', err.message);
     process.exit(1);
