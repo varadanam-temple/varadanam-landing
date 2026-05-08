@@ -218,7 +218,7 @@ function Hero({ onDemo }) {
           maxWidth: 600,
           margin: '0 auto 48px',
         }}>
-          India's complete temple management software — online vazhipadu &amp; seva booking, counter billing, devotee management, donation tracking, and a branded temple website.
+          India's complete temple management software, simplified for temple committees — online vazhipadu &amp; seva booking, counter billing, devotee management, donation tracking, and a branded temple website.
         </p>
 
         {/* CTAs */}
