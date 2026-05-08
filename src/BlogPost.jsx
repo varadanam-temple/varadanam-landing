@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getPost, posts } from './blogPosts.js';
 import { useIsMobile } from './useIsMobile.js';
@@ -77,6 +78,44 @@ export default function BlogPost() {
   const { slug } = useParams();
   const post = getPost(slug);
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    if (!post) return;
+    const title = `${post.title} | Varadanam`;
+    const desc = post.excerpt;
+    const canonical = `https://varadanam.com/blog/${slug}`;
+
+    document.title = title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', desc);
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonical);
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', desc);
+    document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonical);
+
+    const existingScript = document.getElementById('blog-ld-json');
+    if (existingScript) existingScript.remove();
+    const script = document.createElement('script');
+    script.id = 'blog-ld-json';
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: desc,
+      url: canonical,
+      datePublished: post.date,
+      author: { '@type': 'Organization', name: post.author || 'Varadanam' },
+      publisher: { '@type': 'Organization', name: 'Varadanam', url: 'https://varadanam.com' },
+    });
+    document.head.appendChild(script);
+
+    return () => {
+      document.title = 'Varadanam — Temple Management Software | Online Vazhipadu & Seva Booking India';
+      document.querySelector('meta[name="description"]')?.setAttribute('content', "Varadanam is India's temple management software.");
+      document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://varadanam.com/');
+      document.getElementById('blog-ld-json')?.remove();
+    };
+  }, [post, slug]);
 
   if (!post) {
     return (

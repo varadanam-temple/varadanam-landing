@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { posts } from './blogPosts.js';
 import { useIsMobile } from './useIsMobile.js';
@@ -8,6 +9,16 @@ function formatDate(dateStr) {
 
 export default function Blog() {
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    document.title = 'Blog — Temple Management Tips & Guides for Kerala Temples | Varadanam';
+    document.querySelector('meta[name="description"]')?.setAttribute('content', 'Practical guides for Kerala temple trustees and managers — online vazhipadu booking, temple digitisation, devotee management, and more.');
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://varadanam.com/blog');
+    return () => {
+      document.title = 'Varadanam — Temple Management Software | Online Vazhipadu & Seva Booking India';
+      document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://varadanam.com/');
+    };
+  }, []);
   return (
     <div style={{ background: '#100b04', minHeight: '100vh' }}>
       {/* Navbar */}
