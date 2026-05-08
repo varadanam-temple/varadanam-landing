@@ -1,13 +1,8 @@
 import pkg from 'prerender-spa-ultra';
-import puppeteerPkg from 'puppeteer';
 import { createServer } from 'http';
 import { readFileSync, existsSync } from 'fs';
 import { resolve, extname, join } from 'path';
-
-// Set CHROME_PATH before prerender-spa-ultra's getChromeExecutable() runs.
-// The library checks process.env.CHROME_PATH first in its lookup chain.
-const { executablePath } = puppeteerPkg;
-process.env.CHROME_PATH = executablePath();
+import { platform } from 'os';
 
 const { preRenderSite } = pkg;
 
@@ -42,9 +37,27 @@ const server = createServer((req, res) => {
   }
 });
 
-// All entry points to ensure full crawl coverage
-// preRenderSite crawls links found on each page, so starting from
-// both / and /temple-history ensures all routes are discovered.
+async function getChrome() {
+  if (platform() === 'linux') {
+    // @sparticuz/chromium bundles all required Linux shared libraries
+    // — designed for CI/serverless environments like Vercel
+    const chromium = (await import('@sparticuz/chromium')).default;
+    return {
+      executablePath: await chromium.executablePath(),
+      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+      headless: chromium.headless,
+    };
+  } else {
+    // On Mac/Windows, use puppeteer's bundled Chrome for Testing
+    const { executablePath } = await import('puppeteer');
+    return {
+      executablePath: executablePath(),
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      headless: 'new',
+    };
+  }
+}
+
 const STARTING_URLS = [
   `http://localhost:${PORT}/`,
   `http://localhost:${PORT}/blog`,
@@ -55,6 +68,10 @@ const STARTING_URLS = [
 server.listen(PORT, async () => {
   console.log(`Static server running at http://localhost:${PORT}`);
   try {
+    const chrome = await getChrome();
+    process.env.CHROME_PATH = chrome.executablePath;
+    console.log(`Using Chrome at: ${chrome.executablePath}`);
+
     let totalRendered = 0;
     const BASE = `http://localhost:${PORT}`;
     for (const startingUrl of STARTING_URLS) {
@@ -63,10 +80,7 @@ server.listen(PORT, async () => {
         baseUrl: BASE,
         outputDir: DIST,
         selectorToWaitFor: 'nav',
-        extraBrowserLaunchOptions: {
-          executablePath: executablePath(),
-          args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
-        },
+        extraBrowserLaunchOptions: chrome,
       });
       totalRendered += visited.length;
       console.log(`  ${startingUrl} → ${visited.length} pages`);
