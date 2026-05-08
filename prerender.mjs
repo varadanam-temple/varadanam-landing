@@ -4,7 +4,10 @@ import { createServer } from 'http';
 import { readFileSync, existsSync } from 'fs';
 import { resolve, extname, join } from 'path';
 
+// Set CHROME_PATH before prerender-spa-ultra's getChromeExecutable() runs.
+// The library checks process.env.CHROME_PATH first in its lookup chain.
 const { executablePath } = puppeteerPkg;
+process.env.CHROME_PATH = executablePath();
 
 const { preRenderSite } = pkg;
 
