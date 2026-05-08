@@ -1,7 +1,10 @@
 import pkg from 'prerender-spa-ultra';
+import puppeteerPkg from 'puppeteer';
 import { createServer } from 'http';
 import { readFileSync, existsSync } from 'fs';
 import { resolve, extname, join } from 'path';
+
+const { executablePath } = puppeteerPkg;
 
 const { preRenderSite } = pkg;
 
@@ -58,6 +61,7 @@ server.listen(PORT, async () => {
         outputDir: DIST,
         selectorToWaitFor: 'nav',
         extraBrowserLaunchOptions: {
+          executablePath: executablePath(),
           args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
         },
       });
