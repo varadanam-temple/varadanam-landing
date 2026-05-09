@@ -61,7 +61,15 @@ async function getChrome() {
 const STARTING_URLS = [
   `http://localhost:${PORT}/`,
   `http://localhost:${PORT}/blog`,
+  `http://localhost:${PORT}/blog/online-vazhipadu-booking-kerala-temples`,
+  `http://localhost:${PORT}/blog/temple-management-software-kerala-guide`,
+  `http://localhost:${PORT}/blog/digitize-temple-seva-bookings-one-day`,
   `http://localhost:${PORT}/temple-history`,
+  `http://localhost:${PORT}/temple-history/guruvayur-temple-history`,
+  `http://localhost:${PORT}/temple-history/padmanabhaswamy-temple-history`,
+  `http://localhost:${PORT}/temple-history/sabarimala-ayyappa-temple-history`,
+  `http://localhost:${PORT}/temple-history/vaikom-mahadeva-temple-history`,
+  `http://localhost:${PORT}/temple-history/parassinikkadav-muthappan-temple-history`,
   `http://localhost:${PORT}/our-story`,
 ];
 
