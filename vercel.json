@@ -7,5 +7,5 @@
       "permanent": true
     }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [{ "source": "/((?!.*\\.(txt|xml|json|svg|png|ico|jpg|jpeg|gif|webp|js|css|woff|woff2|ttf|eot)).*)", "destination": "/index.html" }]
 }
