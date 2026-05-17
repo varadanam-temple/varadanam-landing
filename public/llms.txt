@@ -1,0 +1,49 @@
+# Varadanam
+
+> Varadanam is a complete temple management software for Hindu temples in Kerala and South India. It enables online vazhipadu and seva booking, counter billing, devotee management, donation tracking, financial reports, and a branded temple website — all in one platform.
+
+## What Varadanam does
+
+Varadanam helps temple trustees and administrators digitise their temple operations:
+
+- **Online vazhipadu booking** — Devotees can browse, book, and pay for vazhipadu and sevas online from any device, including from abroad (NRI devotees)
+- **Counter billing (POS)** — Temple priests and staff can record walk-in bookings and cash payments at the counter
+- **Devotee management** — Store devotee names, nakshatras, gothrams, and booking history
+- **Donation tracking** — Record and receipt all temple donations
+- **Financial reports** — Daily, monthly, and annual reports suitable for Devaswom Board audits
+- **Branded temple website** — Each temple gets its own website where devotees can book online
+
+## Who uses Varadanam
+
+- Temple trustees and managing committees
+- Devaswom Boards (Travancore, Cochin, Malabar)
+- Temple administrators and priests
+- NRI devotees booking vazhipadu from abroad
+
+## Key pages
+
+- [Home](https://varadanam.com/): Overview of all features, pricing, and demo request
+- [Our Story](https://varadanam.com/our-story): Why Varadanam was built — the founder's story in English and Malayalam
+- [Blog](https://varadanam.com/blog): Guides for temple managers on digitisation, vazhipadu booking, and temple management
+- [Temple History](https://varadanam.com/temple-history): Detailed history of famous Kerala temples — Guruvayur, Sabarimala, Padmanabhaswamy, Vaikom, Parassinikkadav
+
+## Blog posts
+
+- [Online Vazhipadu Booking for Kerala Temples](https://varadanam.com/blog/online-vazhipadu-booking-kerala-temples): How temples in Kerala can enable online vazhipadu booking for devotees
+- [Temple Management Software Guide for Kerala](https://varadanam.com/blog/temple-management-software-kerala-guide): A complete guide to choosing temple management software in Kerala
+- [Digitise Temple Seva Bookings in One Day](https://varadanam.com/blog/digitize-temple-seva-bookings-one-day): Step-by-step guide for going live with Varadanam in a single day
+
+## Temple history articles
+
+- [Guruvayur Temple History](https://varadanam.com/temple-history/guruvayur-temple-history)
+- [Padmanabhaswamy Temple History](https://varadanam.com/temple-history/padmanabhaswamy-temple-history)
+- [Sabarimala Ayyappa Temple History](https://varadanam.com/temple-history/sabarimala-ayyappa-temple-history)
+- [Vaikom Mahadeva Temple History](https://varadanam.com/temple-history/vaikom-mahadeva-temple-history)
+- [Parassinikkadav Muthappan Temple History](https://varadanam.com/temple-history/parassinikkadav-muthappan-temple-history)
+
+## Contact
+
+- Website: https://varadanam.com
+- Email: hello@varadanam.com
+- Phone: +91-8088079670
+- Location: Kerala, India
