@@ -62,11 +62,6 @@ const STARTING_URLS = [
   `http://localhost:${PORT}/`,
   `http://localhost:${PORT}/blog`,
   `http://localhost:${PORT}/temple-history`,
-  `http://localhost:${PORT}/temple-history/guruvayur-temple-history`,
-  `http://localhost:${PORT}/temple-history/padmanabhaswamy-temple-history`,
-  `http://localhost:${PORT}/temple-history/sabarimala-ayyappa-temple-history`,
-  `http://localhost:${PORT}/temple-history/vaikom-mahadeva-temple-history`,
-  `http://localhost:${PORT}/temple-history/parassinikkadav-muthappan-temple-history`,
   `http://localhost:${PORT}/our-story`,
 ];
 
