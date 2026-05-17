@@ -1224,6 +1224,12 @@ function Home() {
   const [demoOpen, setDemoOpen] = useState(false);
 
   useEffect(() => {
+    document.title = 'Temple Management Software for Kerala Temples | Varadanam';
+    document.querySelector('meta[name="description"]')?.setAttribute('content', 'Temple management software for Kerala temples — online vazhipadu & seva booking, counter billing, devotee management, and a branded temple website. Trusted by 200+ temples.');
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://varadanam.com/');
+  }, []);
+
+  useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', fn);
     return () => window.removeEventListener('scroll', fn);

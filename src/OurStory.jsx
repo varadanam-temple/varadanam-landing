@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const BURNT = '#DF8E40';
@@ -140,6 +140,17 @@ function Navbar({ lang, toggleLang }) {
 export default function OurStory() {
   const [lang, setLang] = useState('ml');
   const c = content[lang];
+
+  useEffect(() => {
+    document.title = 'Our Story — Varadanam | Temple Management Software Born in Kerala';
+    document.querySelector('meta[name="description"]')?.setAttribute('content', 'The story behind Varadanam — built to protect the sacred moment between devotee and divine. Temple management software rooted in Kerala\'s temple tradition.');
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://varadanam.com/our-story');
+    return () => {
+      document.title = 'Varadanam — Temple Management Software | Online Vazhipadu & Seva Booking India';
+      document.querySelector('meta[name="description"]')?.setAttribute('content', 'Temple management software for Kerala temples — online vazhipadu & seva booking, counter billing, devotee management, and a branded temple website. Trusted by 200+ temples.');
+      document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://varadanam.com/');
+    };
+  }, []);
 
   return (
     <div style={{ background: '#fff9eb', minHeight: '100vh' }}>
