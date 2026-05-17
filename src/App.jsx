@@ -8,6 +8,7 @@ const Blog = lazy(() => import('./Blog.jsx'));
 const BlogPost = lazy(() => import('./BlogPost.jsx'));
 const TempleHistory = lazy(() => import('./TempleHistory.jsx'));
 const TempleHistoryPost = lazy(() => import('./TempleHistoryPost.jsx'));
+const NotFound = lazy(() => import('./NotFound.jsx'));
 import './index.css';
 
 /* ── Shared: MandalaBg ── */
@@ -1260,6 +1261,7 @@ export default function App() {
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/temple-history" element={<TempleHistory />} />
         <Route path="/temple-history/:slug" element={<TempleHistoryPost />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );
