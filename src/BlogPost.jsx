@@ -91,6 +91,10 @@ export default function BlogPost() {
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', desc);
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonical);
+    document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://varadanam.com/og-image.png');
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', title);
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', desc);
+    document.querySelector('meta[name="twitter:image"]')?.setAttribute('content', 'https://varadanam.com/og-image.png');
 
     const existingScript = document.getElementById('blog-ld-json');
     if (existingScript) existingScript.remove();

@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, useLayoutEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { useIsMobile } from './useIsMobile.js';
 import { posts } from './blogPosts.js';
@@ -136,7 +136,7 @@ function Navbar({ scrolled, onDemo }) {
 function Hero({ onDemo }) {
   const isMobile = useIsMobile();
   const [vis, setVis] = useState(false);
-  useEffect(() => { setVis(true); }, []);
+  useLayoutEffect(() => { setVis(true); }, []); // eslint-disable-line react-hooks/set-state-in-effect
 
   const fadeUp = (delay = 0) => ({
     opacity: vis ? 1 : 0,
@@ -883,11 +883,10 @@ function Footer() {
             </p>
             <div style={{ display: 'flex', gap: 12 }}>
               {[
-                { label: 'Twitter/X', path: 'M18 4L13.5 9.5M6 20l5.5-5.5M18 4l-12 16M18 4h-4M6 20h4' },
-                { label: 'Instagram', path: 'M16 3H8a5 5 0 00-5 5v8a5 5 0 005 5h8a5 5 0 005-5V8a5 5 0 00-5-5zM12 8a4 4 0 100 8 4 4 0 000-8zm4.5-1.5a1 1 0 100 2 1 1 0 000-2z' },
-                { label: 'LinkedIn', path: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z' },
+                { label: 'Twitter/X', path: 'M18 4L13.5 9.5M6 20l5.5-5.5M18 4l-12 16M18 4h-4M6 20h4', href: 'https://twitter.com/varadanam' },
+                { label: 'LinkedIn', path: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z', href: 'https://www.linkedin.com/company/varadanam' },
               ].map(s => (
-                <a key={s.label} href="#" aria-label={s.label} style={{
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} style={{
                   width: 36, height: 36, borderRadius: 8, border: '1px solid rgba(255,179,29,0.15)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: 'rgba(250,246,239,0.45)', transition: 'all 0.2s', textDecoration: 'none',
@@ -905,22 +904,32 @@ function Footer() {
           <div>
             <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#FFB31D', marginBottom: 20, fontFamily: 'DM Sans, sans-serif' }}>Product</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {['Features', 'How it works', 'Pricing', 'Roadmap'].map(l => (
-                <a key={l} href="#" style={{ color: 'rgba(250,246,239,0.5)', textDecoration: 'none', fontSize: 14, transition: 'color 0.2s' }}
+              {[
+                { label: 'Features', href: '/#features' },
+                { label: 'How it works', href: '/#how-it-works' },
+                { label: 'Pricing', href: '/#demo' },
+                { label: 'Request Demo', href: '/#demo' },
+              ].map(l => (
+                <a key={l.label} href={l.href} style={{ color: 'rgba(250,246,239,0.5)', textDecoration: 'none', fontSize: 14, transition: 'color 0.2s' }}
                   onMouseEnter={e => e.target.style.color = '#faf6ef'}
                   onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.5)'}
-                >{l}</a>
+                >{l.label}</a>
               ))}
             </div>
           </div>
           <div>
             <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#FFB31D', marginBottom: 20, fontFamily: 'DM Sans, sans-serif' }}>Company</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {['About Us', 'Blog', 'Careers', 'Contact'].map(l => (
-                <a key={l} href="#" style={{ color: 'rgba(250,246,239,0.5)', textDecoration: 'none', fontSize: 14, transition: 'color 0.2s' }}
+              {[
+                { label: 'Our Story', href: '/our-story' },
+                { label: 'Blog', href: '/blog' },
+                { label: 'Temple History', href: '/temple-history' },
+                { label: 'Contact', href: 'mailto:hello@varadanam.com' },
+              ].map(l => (
+                <a key={l.label} href={l.href} style={{ color: 'rgba(250,246,239,0.5)', textDecoration: 'none', fontSize: 14, transition: 'color 0.2s' }}
                   onMouseEnter={e => e.target.style.color = '#faf6ef'}
                   onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.5)'}
-                >{l}</a>
+                >{l.label}</a>
               ))}
             </div>
           </div>
@@ -947,12 +956,10 @@ function Footer() {
             © 2026 Varadanam. Made with devotion in India.
           </span>
           <div style={{ display: 'flex', gap: 24 }}>
-            {['Privacy Policy', 'Terms of Service'].map(l => (
-              <a key={l} href="#" style={{ fontSize: 12.5, color: 'rgba(250,246,239,0.3)', textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={e => e.target.style.color = 'rgba(250,246,239,0.6)'}
-                onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.3)'}
-              >{l}</a>
-            ))}
+            <a href="mailto:hello@varadanam.com" style={{ fontSize: 12.5, color: 'rgba(250,246,239,0.3)', textDecoration: 'none', transition: 'color 0.2s' }}
+              onMouseEnter={e => e.target.style.color = 'rgba(250,246,239,0.6)'}
+              onMouseLeave={e => e.target.style.color = 'rgba(250,246,239,0.3)'}
+            >hello@varadanam.com</a>
           </div>
         </div>
       </div>
@@ -1096,8 +1103,8 @@ function DemoModal({ open, onClose }) {
                   </div>
                 </div>
                 <div>
-                  <label style={labelStyle}>Email Address <span style={{ opacity: 0.45, fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(optional)</span></label>
-                  <input type="email" style={inputStyle} placeholder="you@example.com" value={form.email} onChange={e => set('email', e.target.value)}
+                  <label style={labelStyle}>Email Address</label>
+                  <input type="email" style={inputStyle} placeholder="you@example.com" value={form.email} onChange={e => set('email', e.target.value)} required
                     onFocus={e => e.target.style.borderColor = '#FF6906'}
                     onBlur={e => e.target.style.borderColor = 'rgba(255,179,29,0.15)'}
                   />

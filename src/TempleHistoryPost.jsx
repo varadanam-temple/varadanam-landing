@@ -63,6 +63,11 @@ export default function TempleHistoryPost() {
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', desc);
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonical);
+    const ogImage = temple.heroImage?.src || 'https://varadanam.com/og-image.png';
+    document.querySelector('meta[property="og:image"]')?.setAttribute('content', ogImage);
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', title);
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', desc);
+    document.querySelector('meta[name="twitter:image"]')?.setAttribute('content', ogImage);
 
     // Inject structured data for this temple
     const existingScript = document.getElementById('temple-ld-json');

@@ -174,7 +174,7 @@ export default function OurStory() {
 
       {/* Story body */}
       <div style={{ maxWidth: 760, margin: '0 auto', padding: '80px 32px' }}>
-        {c.sections.map((s, i) => (
+        {c.sections.map((s) => (
           <div key={s.num} style={{ marginBottom: 72 }}>
             <p style={{ fontFamily: serif, fontWeight: 700, color: BURNT, fontSize: 12, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>
               {s.num} — {s.label}
